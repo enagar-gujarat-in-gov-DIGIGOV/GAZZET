@@ -1,12 +1,30 @@
-DEMO
+DIRECT PDF QR DEMO
 
-Open index.html to see the portal.
-Open qr-generator.html to generate a QR for the demo viewer.
-The QR points to viewer.html?id=26091696.
-The viewer displays pdf/demo-gazette.pdf.
+This version does NOT use viewer.html.
 
-FOR ONLINE USE:
-Replace the relative URL in the QR generator with your real domain, e.g.
-https://yourdomain.in/viewer.html?id=26091696
+QR CODE -> DIRECT PDF
 
-For production, a backend/database should create document IDs and QR codes automatically.
+Example:
+https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/pdf/demo-gazette.pdf
+
+GitHub Pages folder structure:
+
+index.html
+qr-generator.html
+pdf/
+    demo-gazette.pdf
+
+For another PDF:
+1. Upload it into pdf/
+2. Use its direct URL in qr-generator.html
+3. Generate the QR
+4. Print the QR
+
+Example:
+pdf/26091696.pdf
+
+QR destination:
+https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/pdf/26091696.pdf
+
+IMPORTANT:
+The PDF URL must be publicly accessible. GitHub Pages is suitable for public documents.
