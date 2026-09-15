@@ -1,19 +1,58 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>QR Generator Demo</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Direct PDF QR Generator</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
-body{font-family:Arial;background:#f3f5f7;margin:0}.box{max-width:600px;margin:45px auto;background:#fff;padding:30px;border-radius:14px;box-shadow:0 8px 30px #0001}input{width:100%;padding:13px;margin:8px 0 14px;border:1px solid #bbb;border-radius:7px;font-size:16px}button{background:#17365d;color:white;border:0;padding:12px 18px;border-radius:7px;cursor:pointer}#qr{margin:25px auto;text-align:center}
-</style></head>
-<body><div class="box"><h1>QR Code Generator</h1>
-<p>Demo: enter the URL of your PDF viewer.</p>
-<input id="url" value="viewer.html?id=26091696">
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f5f7;color:#222}
+header{background:#17365d;color:#fff;padding:18px 6%;font-size:22px;font-weight:700}
+.box{max-width:650px;margin:45px auto;background:#fff;padding:30px;border-radius:14px;box-shadow:0 8px 30px #0001}
+input{width:100%;padding:13px;margin:8px 0 14px;border:1px solid #bbb;border-radius:7px;font-size:16px}
+button,.download{background:#17365d;color:#fff;border:0;padding:12px 18px;border-radius:7px;cursor:pointer;text-decoration:none;display:inline-block;margin-top:8px}
+#qr{margin:25px auto;text-align:center}
+.note{background:#eef4fa;padding:14px;border-radius:8px;line-height:1.5}
+</style>
+</head>
+<body>
+<header>Gazette — Direct PDF QR Generator</header>
+<div class="box">
+<h1>Create QR for PDF</h1>
+<p class="note"><b>Important:</b> The QR code below points directly to the PDF. After scanning, the phone opens the PDF immediately. There is no viewer page and no “Open PDF” button.</p>
+
+<label><b>PDF URL</b></label>
+<input id="url" value="pdf/demo-gazette.pdf" placeholder="https://yourdomain.com/pdf/document.pdf">
+
 <button onclick="generate()">Generate QR</button>
-<div id="qr"></div></div>
+<div id="qr"></div>
+<a id="download" class="download" hidden>Download QR PNG</a>
+</div>
+
 <script>
-function generate(){document.getElementById("qr").innerHTML="";
-new QRCode(document.getElementById("qr"),{text:document.getElementById("url").value,width:260,height:260});}
+function generate(){
+  const value=document.getElementById('url').value.trim();
+  if(!value){alert('Enter the PDF URL');return;}
+
+  document.getElementById('qr').innerHTML='';
+  new QRCode(document.getElementById('qr'),{
+    text:new URL(value, location.href).href,
+    width:300,
+    height:300
+  });
+
+  setTimeout(()=>{
+    const canvas=document.querySelector('#qr canvas');
+    if(canvas){
+      const a=document.getElementById('download');
+      a.href=canvas.toDataURL('image/png');
+      a.download='pdf-qr-code.png';
+      a.hidden=false;
+    }
+  },200);
+}
 generate();
-</script></body></html>
+</script>
+</body>
+</html>
